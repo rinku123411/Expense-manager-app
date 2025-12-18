@@ -8,11 +8,14 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.expenseManagerv2.Bean.LoginBean;
+import com.google.api.client.util.Value;
 
 @Repository
 public class AuthDAOWrapper implements AuthDAO {
+	@Value("${firebase.api.key}")
+    private static String firebaseApiKey;
 	private static final String FIREBASE_LOGIN_URL =
-            "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDeFzYXKniBp2Q02ho3oKz3ZNJ76quJmTI";
+            "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key="+ firebaseApiKey;
 
     private final RestTemplate restTemplate = new RestTemplate();
 

@@ -17,7 +17,6 @@ import com.example.expenseManagerv2.Bean.LoginRequestBean;
 import com.example.expenseManagerv2.Bean.User;
 import com.example.expenseManagerv2.Service.AuthService;
 import com.example.expenseManagerv2.Service.UserService;
-import com.example.expenseManagerv2.entity.UserEntity;
 import com.google.firebase.auth.FirebaseAuthException;
 
 @RestController

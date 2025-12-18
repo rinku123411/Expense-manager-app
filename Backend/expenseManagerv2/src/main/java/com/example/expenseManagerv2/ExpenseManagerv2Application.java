@@ -7,6 +7,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -14,20 +15,24 @@ import java.io.InputStream;
 public class ExpenseManagerv2Application {
 
 		public static void main(String[] args) throws IOException {
-			InputStream serviceAccount =
-					ExpenseManagerv2Application.class
-							.getClassLoader()
-							.getResourceAsStream("serviceAccountKey.json");
+			try {
+		        String firebasePath = System.getenv("FIREBASE_CONFIG_PATH");
 
-			if (serviceAccount == null) {
-				throw new RuntimeException("Firebase serviceAccountKey.json not found");
-			}
+		        if (firebasePath == null || firebasePath.isEmpty()) {
+		            throw new RuntimeException("FIREBASE_CONFIG_PATH environment variable not set");
+		        }
+
+		        InputStream serviceAccount = new FileInputStream(firebasePath);
 
 			FirebaseOptions options = new FirebaseOptions.Builder()
 					.setCredentials(GoogleCredentials.fromStream(serviceAccount))
 					.build();
-
-			FirebaseApp.initializeApp(options);
+			if(FirebaseApp.getApps().isEmpty()) {
+				FirebaseApp.initializeApp(options);
+			}
+			}catch(Exception e) {
+				throw new RuntimeException("Failed to initialize firebase",e);
+			}
 			SpringApplication.run(ExpenseManagerv2Application.class, args);
 	}
 

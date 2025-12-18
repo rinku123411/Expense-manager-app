@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.expenseManagerv2.Bean.UserBean;
+import com.example.expenseManagerv2.Bean.User;
 import com.example.expenseManagerv2.Service.UserService;
+import com.example.expenseManagerv2.entity.UserEntity;
+import com.google.firebase.auth.FirebaseAuthException;
 
 @RestController
 public class Controller {
@@ -20,12 +23,12 @@ public class Controller {
 		this.userService=userService;
 	}
 	@PostMapping("/create")
-	public String createUser(@RequestBody UserBean userBean) throws InterruptedException, ExecutionException{
+	public String createUser(@RequestBody UserBean userBean) throws InterruptedException, ExecutionException, FirebaseAuthException{
 		return userService.createUser(userBean);
 	}
 	@GetMapping("/get")
-	public UserBean getUser(@RequestParam String userId) throws InterruptedException, ExecutionException {
-		return userService.getuser(userId);
+	public User getUser(@RequestParam(required= false) String userId, @RequestParam(required= false) String email) throws InterruptedException, ExecutionException {
+		return userService.getuser(userId, email);
 	}
 	
 	

@@ -1,10 +1,13 @@
 package com.example.expenseManagerv2.controller;
 
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,22 +37,24 @@ public class Controller {
 	@Autowired
 	private GroupService groupService;
 	
-	@PostMapping("/createUser")
-	public String createUser(@RequestBody UserBean userBean) throws InterruptedException, ExecutionException, FirebaseAuthException{
+	@PostMapping("/create-user")
+	public Map<String, Object> createUser(@RequestBody UserBean userBean) throws InterruptedException, ExecutionException, FirebaseAuthException{
 		return userService.createUser(userBean);
 	}
-	@GetMapping("/getUser")
+	@GetMapping("/get-user")
 	public User getUser(@RequestParam(required= false) String userId, @RequestParam(required= false) String email) throws InterruptedException, ExecutionException {
 		return userService.getuser(userId, email);
 	}
 	
 	@RequestMapping("/login")
-	public LoginBean login(@RequestBody LoginRequestBean loginRequestBean) {
-		return authService.login(loginRequestBean);
-		
+	public ResponseEntity<?> login(@RequestBody LoginRequestBean loginRequestBean) {
+		LoginBean login= authService.login(loginRequestBean);
+		 return ResponseEntity.ok(
+			        Map.of("token", login.getIdToken())
+			    );
 	}
 	
-	@PostMapping("/createGroup")
+	@PostMapping("/create-group")
 	public String createGroup(@RequestBody GroupBean groupBean) throws InterruptedException, ExecutionException, FirebaseAuthException{
 		return groupService.createGroup(groupBean);
 	}
@@ -58,6 +63,13 @@ public class Controller {
 	@GetMapping("/test")
 	public ResponseEntity<String> testGetEndpoint(){
 		return ResponseEntity.ok("test get Endpoint is working");
+	}
+	
+	@ExceptionHandler(FirebaseAuthException.class)
+	public ResponseEntity<?> handleAuthError(FirebaseAuthException e) {
+	    return ResponseEntity
+	        .status(HttpStatus.BAD_REQUEST)
+	        .body(e.getMessage());
 	}
 
 }

@@ -2,12 +2,16 @@ package com.example.expenseManagerv2.dao;
 
 import java.time.Instant;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.example.expenseManagerv2.Bean.UserBean;
+import com.example.expenseManagerv2.Service.AuthService;
+import com.example.expenseManagerv2.Bean.LoginBean;
+import com.example.expenseManagerv2.Bean.LoginRequestBean;
 import com.example.expenseManagerv2.Bean.User;
 import com.example.expenseManagerv2.entity.UserEntity;
 import com.google.api.core.ApiFuture;
@@ -25,21 +29,31 @@ import com.google.firebase.cloud.FirestoreClient;
 public class UserDAOWrapper implements UserDAO{
 	@Autowired
 	private Firestore firestore;
+	@Autowired
+	private AuthService authService;
 
 	@Override
-	public String createUser(UserBean userBean) throws InterruptedException, ExecutionException, FirebaseAuthException {
+	public Map<String, Object> createUser(UserBean userBean) throws InterruptedException, ExecutionException, FirebaseAuthException {
 		UserRecord.CreateRequest request=  new UserRecord.CreateRequest().setEmail(userBean.getEmail()).setPassword(userBean
 				.getPassword());
 		UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
 		String userId= userRecord.getUid();
+		String  createdAt= Instant.now().toString();
 		HashMap<String, Object> userData= new HashMap<>();
 		userData.put("name", userBean.getName());
 		userData.put("email", userBean.getEmail());
 		userData.put("userId", userId);
-		userData.put("createdAt", Instant.now().toString());
+		userData.put("createdAt", createdAt);
 		
 		ApiFuture<WriteResult> collectionApiFuture = firestore.collection("users").document(userId).set(userData);
-		return collectionApiFuture.get().getUpdateTime().toString();
+		 LoginRequestBean loginRequestBean= new LoginRequestBean();
+		 loginRequestBean.setEmail(userBean.getEmail());
+		 loginRequestBean.setPassword(userBean.getPassword());
+		LoginBean login = authService.login(loginRequestBean);
+		return Map.of(
+	            "user", userData,
+	            "token", login.getIdToken()
+	    );
 		}
 
 	@Override

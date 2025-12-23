@@ -12,4 +12,12 @@ export class AuthService {
     };
     return this.authAPIService.login(user);
   }
+  createUser(name: string, email: string, password: string) {
+    const user: User = {
+      name,
+      email,
+      password,
+    };
+    return this.authAPIService.createUser(user);
+  }
 }

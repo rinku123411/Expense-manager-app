@@ -30,13 +30,16 @@ public class AuthDAOWrapper implements AuthDAO {
         request.put("password", password);
         request.put("returnSecureToken", true);
 
-        ResponseEntity<Map> response = restTemplate.postForEntity(
+        ResponseEntity<Map<String, Object>> response = restTemplate.postForEntity(
                 url,
                 request,
-                Map.class
+                (Class<Map<String, Object>>)(Class<?>)Map.class
         );
 
-        Map body = response.getBody();
+        Map<String,Object> body = response.getBody();
+        if (body == null || !body.containsKey("idToken")) {
+            throw new RuntimeException("Invalid login credentials");
+        }
 
         return new LoginBean(
                 body.get("idToken").toString(),

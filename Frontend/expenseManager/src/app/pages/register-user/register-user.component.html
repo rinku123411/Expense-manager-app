@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!-- Back button that calls goBack() in the component -->
+      <ion-button
+        (click)="goBack()"
+        fill="clear"
+        color="primary"
+        aria-label="Back"
+        class="back-button"
+      >
+        <ion-icon
+          class="back-icon"
+          slot="icon-only"
+          src="assets/icon/back.svg"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Register yourself</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form class="register-form" (submit)="onSubmit($event)">
+    <ion-list lines="full">
+      <ion-item>
+        <ion-label position="stacked">Name</ion-label>
+        <ion-input
+          placeholder="Your full name"
+          type="text"
+          (input)="onInput('name', $any($event.target).value)"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input
+          placeholder="you@example.com"
+          type="email"
+          (input)="onInput('email', $any($event.target).value)"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Password</ion-label>
+        <ion-input
+          placeholder="Password"
+          type="password"
+          (input)="onInput('password', $any($event.target).value)"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Re-enter Password</ion-label>
+        <ion-input
+          placeholder="Confirm password"
+          type="password"
+          (input)="onInput('confirmPassword', $any($event.target).value)"
+          required
+        ></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <div class="errors" *ngIf="submitted && !formValid()">
+      <div *ngIf="errors.required" class="error">{{ errors.required }}</div>
+      <div *ngIf="errors.email" class="error">{{ errors.email }}</div>
+      <div *ngIf="errors.password" class="error">{{ errors.password }}</div>
+      <div *ngIf="errors.confirmPassword" class="error">
+        {{ errors.confirmPassword }}
+      </div>
+      <div *ngIf="errors.passwordMismatch" class="error">
+        {{ errors.passwordMismatch }}
+      </div>
+    </div>
+
+    <ion-button
+      expand="block"
+      type="submit"
+      [disabled]="!formValid()"
+      class="submit-btn"
+    >
+      Register
+    </ion-button>
+  </form>
+</ion-content>

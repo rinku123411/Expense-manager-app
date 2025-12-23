@@ -1,5 +1,6 @@
 package com.example.expenseManagerv2.Service;
 
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class UserServiceImpl implements UserService{
 	UserDAO userDAO;
 	
 	@Override
-	public String createUser(UserBean userBean) throws InterruptedException, ExecutionException, FirebaseAuthException {
+	public Map<String, Object> createUser(UserBean userBean) throws InterruptedException, ExecutionException, FirebaseAuthException {
 		return userDAO.createUser(userBean);
 	}
 

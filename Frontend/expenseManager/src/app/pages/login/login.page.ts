@@ -17,6 +17,8 @@ import { FirebaseAuthService } from 'src/app/core/api/firebase/auth.firebase';
 export class LoginPage {
   email: string = '';
   password: string = '';
+  isLoginClicked: boolean = false;
+  isCreatingUser: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -26,18 +28,29 @@ export class LoginPage {
   ) {}
 
   login() {
+    if (this.isLoginClicked) return;
+    this.isLoginClicked = true;
     if (!this.email || !this.password) return;
-    this.firebaseAuthService
-      .login(this.email, this.password)
-      .then(async (res) => {
+    console.log('Logging in with', this.email);
+    this.authService.login(this.email, this.password).subscribe(
+      (res) => {
         console.log(res);
-        const user: any = await this.firebaseService.getuserById(res.user.uid);
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('auth_token', res.token);
         this.router.navigateByUrl('/homepage');
-        console.log('login successful', user);
-      })
-      .catch((err) => {
+      },
+      (err) => {
         console.error('login failed', err);
-      });
+      }
+    );
+  }
+  createUser() {
+    if (this.isCreatingUser) return;
+    this.isCreatingUser = true;
+    console.log('Registering new User');
+    this.router.navigateByUrl('/register-user');
+  }
+  ionViewWillEnter() {
+    this.isLoginClicked = false;
+    this.isCreatingUser = false;
   }
 }

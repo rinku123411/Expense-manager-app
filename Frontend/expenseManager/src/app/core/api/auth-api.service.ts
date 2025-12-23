@@ -9,6 +9,17 @@ export class AuthApiService {
 
   constructor(private http: HttpClient) {}
   login(user: User) {
-    return this.http.post(`${this.baseUrl}/login`, user);
+    return this.http.post<LoginResponse>(`${this.baseUrl}/login`, user);
   }
+  createUser(user: User) {
+    return this.http.post<SignupResponse>(`${this.baseUrl}/create-user`, user);
+  }
+}
+
+export interface LoginResponse {
+  token: string;
+}
+export interface SignupResponse {
+  token: string;
+  user: User;
 }

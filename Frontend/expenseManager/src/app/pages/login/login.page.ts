@@ -22,9 +22,7 @@ export class LoginPage {
 
   constructor(
     private authService: AuthService,
-    private router: Router,
-    private firebaseService: FirebaseService,
-    private firebaseAuthService: FirebaseAuthService
+    private router: Router
   ) {}
 
   login() {

@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Create Group</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="create-group-content">
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Group Name</ion-label>
+      <ion-input
+        [(ngModel)]="groupName"
+        placeholder="Enter group name"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Add Member (email)</ion-label>
+      <ion-input
+        [(ngModel)]="memberEmail"
+        type="email"
+        placeholder="member@example.com"
+      ></ion-input>
+      <ion-button
+        fill="outline"
+        size="small"
+        slot="end"
+        (click)="addMember()"
+        [disabled]="isAdding"
+        >Add</ion-button
+      >
+    </ion-item>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  </ion-list>
+
+  <div class="members-list" *ngIf="members.length > 0">
+    <ion-list>
+      <ion-item *ngFor="let m of members; let i = index">
+        <ion-label>
+          <div class="member-name">{{ m.name }}</div>
+          <div class="member-email">{{ m.email }}</div>
+        </ion-label>
+        <ion-button
+          fill="clear"
+          color="danger"
+          slot="end"
+          size="small"
+          (click)="removeMember(i)"
+          >✕</ion-button
+        >
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div class="actions">
+    <ion-button expand="block" (click)="createGroup()" [disabled]="!groupName"
+      >Create Group</ion-button
+    >
+    <ion-button expand="block" fill="clear" (click)="cancel()"
+      >Cancel</ion-button
+    >
+  </div>
+</ion-content>

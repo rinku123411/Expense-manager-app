@@ -20,4 +20,7 @@ export class AuthService {
     };
     return this.authAPIService.createUser(user);
   }
+  findUserByEmail(email: string) {
+    return this.authAPIService.findUserByEmail(email);
+  }
 }

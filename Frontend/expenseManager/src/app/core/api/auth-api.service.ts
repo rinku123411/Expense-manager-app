@@ -14,6 +14,9 @@ export class AuthApiService {
   createUser(user: User) {
     return this.http.post<SignupResponse>(`${this.baseUrl}/create-user`, user);
   }
+  findUserByEmail(email: string) {
+    return this.http.get<User>(`${this.baseUrl}/get-user/${email}`);
+  }
 }
 
 export interface LoginResponse {

@@ -1,0 +1,22 @@
+.homepage-content {
+  --ion-background-color: transparent;
+}
+
+.create-group-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 16px;
+}
+
+.create-group-btn {
+  --background: #007bff;
+  --background-activated: #0056b3;
+  border-radius: 24px;
+  color: #fff;
+  text-transform: none;
+  padding: 10px 20px;
+  --padding-start: 20px;
+  --padding-end: 20px;
+}

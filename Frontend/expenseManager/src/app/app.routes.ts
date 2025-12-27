@@ -21,6 +21,14 @@ export const routes: Routes = [
   },
 
   {
+    path: 'create-group',
+    loadComponent: () =>
+      import('./pages/create-group/create-group.page').then(
+        (m) => m.CreateGroupPage
+      ),
+  },
+
+  {
     path: 'homepage',
     loadComponent: () =>
       import('./pages/homepage/homepage.component').then(

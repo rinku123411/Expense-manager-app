@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { GroupService } from 'src/app/services/group-service';
 
 @Component({
   selector: 'app-create-group',
@@ -15,11 +16,15 @@ import { AuthService } from 'src/app/services/auth.service';
 export class CreateGroupPage {
   groupName: string = '';
   memberEmail: string = '';
-  members: Array<{ userId: string; name?: string; email: string }> = [];
+  members: Array<{ email: string }> = [];
   errorMessage: string = '';
   isAdding: boolean = false;
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private groupService: GroupService
+  ) {}
 
   addMember() {
     const email = this.memberEmail ? this.memberEmail.trim() : '';
@@ -44,8 +49,6 @@ export class CreateGroupPage {
           this.errorMessage = 'User not found';
         } else {
           this.members.push({
-            userId: user.userId?.toString() || '',
-            name: user.name || user.email,
             email: user.email,
           });
           this.memberEmail = '';
@@ -64,14 +67,23 @@ export class CreateGroupPage {
     this.members.splice(index, 1);
   }
 
+  // Return list of member emails (not user IDs)
   get memberIds() {
-    return this.members.map((m) => m.userId);
+    return this.members.map((m) => m.email);
   }
 
   createGroup() {
     console.log('Creating group', this.groupName, this.memberIds);
-    // TODO: replace with real create logic (API call / firebase etc.)
-    this.router.navigateByUrl('/homepage');
+    this.groupService.createGroup(this.groupName, this.memberIds).subscribe(
+      (res) => {
+        console.log('Group created successfully', res);
+        // navigate after successful creation
+        this.router.navigateByUrl('/homepage');
+      },
+      (err) => {
+        console.error('Failed to create group', err);
+      }
+    );
   }
 
   cancel() {

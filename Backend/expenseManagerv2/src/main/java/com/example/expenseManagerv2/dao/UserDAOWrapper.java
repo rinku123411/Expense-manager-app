@@ -99,5 +99,21 @@ public class UserDAOWrapper implements UserDAO{
 		}
 		
 	}
+
+	@Override
+	public User getuserByEmail(String email) throws InterruptedException, ExecutionException {
+		QuerySnapshot querySnapshot=  firestore.collection("users").whereEqualTo("email", email).limit(1).get().get();
+		if (querySnapshot.isEmpty()) {
+            throw new RuntimeException("User not found with email");
+        }
+//			ApiFuture<DocumentSnapshot> future =documentReference.get();
+			DocumentSnapshot document= querySnapshot.getDocuments().get(0);
+			User userResponse;
+			if(document.exists()) {
+				userResponse=document.toObject(User.class);
+				return userResponse;
+			}
+			return null;
+	}
 }
 

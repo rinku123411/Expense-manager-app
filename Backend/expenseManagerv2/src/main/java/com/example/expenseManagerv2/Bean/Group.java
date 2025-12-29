@@ -3,12 +3,16 @@ package com.example.expenseManagerv2.Bean;
 import java.util.List;
 
 public class Group {
-	private String groupName;
-	public String getGroupName() {
-		return groupName;
+	private String name;
+	private List<String> membersId;
+	private String createdAt;
+	private String createdBy;
+	private String groupId;
+	public String getName() {
+		return name;
 	}
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public List<String> getMembersId() {
 		return membersId;
@@ -34,9 +38,4 @@ public class Group {
 	public void setGroupId(String groupId) {
 		this.groupId = groupId;
 	}
-	private List<String> membersId;
-	private String createdAt;
-	private String createdBy;
-	private String groupId;
-
 }

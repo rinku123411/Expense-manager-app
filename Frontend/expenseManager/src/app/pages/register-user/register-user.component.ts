@@ -150,5 +150,6 @@ export class RegisterUserComponent implements OnInit {
         console.error('User registration failed', err);
       }
     );
+    localStorage.setItem('userEmail', this.email);
   }
 }

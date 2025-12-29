@@ -14,5 +14,6 @@ import com.google.firebase.auth.FirebaseAuthException;
 public interface UserService {
 	Map<String, Object> createUser(UserBean userBean) throws InterruptedException, ExecutionException, FirebaseAuthException;
 User getuser(String userId, String email) throws InterruptedException, ExecutionException;
+User getuserByEmail(String email) throws InterruptedException, ExecutionException;
 
 }

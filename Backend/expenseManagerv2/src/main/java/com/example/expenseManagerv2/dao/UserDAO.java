@@ -10,5 +10,6 @@ import com.google.firebase.auth.FirebaseAuthException;
 public interface UserDAO {
 	Map<String, Object> createUser(UserBean userBean) throws InterruptedException, ExecutionException, FirebaseAuthException;
 	User getUser(String userId, String email) throws InterruptedException, ExecutionException;
+	User getuserByEmail(String email) throws InterruptedException, ExecutionException;
 
 }

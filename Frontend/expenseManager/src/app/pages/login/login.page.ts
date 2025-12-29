@@ -20,10 +20,7 @@ export class LoginPage {
   isLoginClicked: boolean = false;
   isCreatingUser: boolean = false;
 
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   login() {
     if (this.isLoginClicked) return;
@@ -40,6 +37,7 @@ export class LoginPage {
         console.error('login failed', err);
       }
     );
+    localStorage.setItem('userEmail', this.email);
   }
   createUser() {
     if (this.isCreatingUser) return;

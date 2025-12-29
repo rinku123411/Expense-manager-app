@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.expenseManagerv2.Bean.UserBean;
+import com.example.expenseManagerv2.Bean.Group;
 import com.example.expenseManagerv2.Bean.GroupBean;
 import com.example.expenseManagerv2.Bean.LoginBean;
 import com.example.expenseManagerv2.Bean.LoginRequestBean;
@@ -45,6 +46,10 @@ public class Controller {
 	public User getUser(@RequestParam(required= false) String userId, @RequestParam(required= false) String email) throws InterruptedException, ExecutionException {
 		return userService.getuser(userId, email);
 	}
+	@GetMapping("/get-user-by-email")
+	public User getUserByEmail(@RequestParam String email) throws InterruptedException, ExecutionException {
+		return userService.getuserByEmail(email);
+	}
 	
 	@RequestMapping("/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequestBean loginRequestBean) {
@@ -55,7 +60,7 @@ public class Controller {
 	}
 	
 	@PostMapping("/create-group")
-	public String createGroup(@RequestBody GroupBean groupBean) throws InterruptedException, ExecutionException, FirebaseAuthException{
+	public Group createGroup(@RequestBody GroupBean groupBean) throws InterruptedException, ExecutionException, FirebaseAuthException{
 		return groupService.createGroup(groupBean);
 	}
 	

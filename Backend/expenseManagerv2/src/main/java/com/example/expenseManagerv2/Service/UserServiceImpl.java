@@ -26,6 +26,11 @@ public class UserServiceImpl implements UserService{
 	public User getuser(String userId, String email) throws InterruptedException, ExecutionException {
 		return userDAO.getUser(userId,email);
 	}
+
+	@Override
+	public User getuserByEmail(String email) throws InterruptedException, ExecutionException {
+		return userDAO.getuserByEmail(email);
+	}
 	
 
 }

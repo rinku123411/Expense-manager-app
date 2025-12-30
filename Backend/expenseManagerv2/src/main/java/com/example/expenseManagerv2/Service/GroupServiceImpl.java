@@ -1,5 +1,6 @@
 package com.example.expenseManagerv2.Service;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,11 @@ public class GroupServiceImpl implements GroupService{
 	public Group createGroup(GroupBean groupBean) throws InterruptedException, ExecutionException {
 		return groupDAO.createGroup(groupBean);
 		
+	}
+
+	@Override
+	public List<Group> getGroupsByEmail(String email) throws InterruptedException, ExecutionException {
+		return groupDAO.getGroupsByEmail(email);
 	}
 
 }

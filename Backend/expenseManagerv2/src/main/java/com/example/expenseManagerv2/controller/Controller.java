@@ -1,5 +1,6 @@
 package com.example.expenseManagerv2.controller;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -62,6 +63,11 @@ public class Controller {
 	@PostMapping("/create-group")
 	public Group createGroup(@RequestBody GroupBean groupBean) throws InterruptedException, ExecutionException, FirebaseAuthException{
 		return groupService.createGroup(groupBean);
+	}
+	
+	@GetMapping("/groups")
+	public List<Group> getGroups(@RequestParam String email) throws InterruptedException, ExecutionException {
+		return groupService.getGroupsByEmail(email);
 	}
 	
 	

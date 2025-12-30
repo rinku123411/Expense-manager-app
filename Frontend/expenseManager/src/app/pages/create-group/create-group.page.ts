@@ -73,6 +73,10 @@ export class CreateGroupPage {
   }
 
   createGroup() {
+    const userEmail = localStorage.getItem('userEmail');
+    if (userEmail) {
+      this.members.push({ email: userEmail });
+    }
     console.log('Creating group', this.groupName, this.memberIds);
     this.groupService.createGroup(this.groupName, this.memberIds).subscribe(
       (res) => {

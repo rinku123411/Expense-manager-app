@@ -1,0 +1,21 @@
+.group-card {
+  cursor: pointer;
+  border-radius: 12px;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.group-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+.meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: var(--ion-text-color, #333);
+}
+@media (max-width: 480px) {
+  .meta {
+    flex-direction: column;
+    gap: 6px;
+  }
+}

@@ -10,11 +10,15 @@ export class GroupService {
   createGroup(name: string, members: string[]) {
     const group: Group = {
       name: name,
-      membersEmail: members,
+      membersId: members,
       createdBy: localStorage.getItem('userEmail') || '',
     };
     console.log(group);
     return this.groupApiService.createGroup(group);
     // Placeholder for future implementation
+  }
+
+  getGroups(email: string) {
+    return this.groupApiService.getGroups(email);
   }
 }

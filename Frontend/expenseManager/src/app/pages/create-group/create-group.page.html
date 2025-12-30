@@ -1,5 +1,20 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button
+        (click)="cancel()"
+        fill="clear"
+        color="primary"
+        aria-label="Back"
+        class="back-button"
+      >
+        <ion-icon
+          class="back-icon"
+          slot="icon-only"
+          src="assets/icon/back.svg"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Create Group</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -52,11 +67,18 @@
   </div>
 
   <div class="actions">
-    <ion-button expand="block" (click)="createGroup()" [disabled]="!groupName"
-      >Create Group</ion-button
+    <ion-button
+      expand="block"
+      (click)="createGroup()"
+      [disabled]="!groupName || isCreating"
     >
-    <ion-button expand="block" fill="clear" (click)="cancel()"
-      >Cancel</ion-button
-    >
+      <ng-container *ngIf="!isCreating; else creating">
+        Create Group
+      </ng-container>
+      <ng-template #creating>
+        <ion-spinner name="crescent" slot="start"></ion-spinner>
+        Creating...
+      </ng-template>
+    </ion-button>
   </div>
 </ion-content>

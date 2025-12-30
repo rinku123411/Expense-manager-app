@@ -12,13 +12,23 @@ import {
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
-import { provideHttpClient } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
+import { LoadingInterceptor } from './app/core/interceptors/loading.interceptor';
+import { setAssetPath } from 'ionicons';
+
+// Ensure Ionic's asset path is set so ion-icon can resolve named icons (svg/*)
+setAssetPath(document.baseURI + 'assets/');
 
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
-    provideHttpClient(),
+    provideHttpClient(withInterceptorsFromDi()),
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
   ],
 });

@@ -72,7 +72,12 @@ export class CreateGroupPage {
     return this.members.map((m) => m.email);
   }
 
+  isCreating: boolean = false;
+
   createGroup() {
+    if (this.isCreating) return;
+    this.isCreating = true;
+
     const userEmail = localStorage.getItem('userEmail');
     if (userEmail) {
       this.members.push({ email: userEmail });
@@ -83,9 +88,11 @@ export class CreateGroupPage {
         console.log('Group created successfully', res);
         // navigate after successful creation
         this.router.navigateByUrl('/homepage');
+        this.isCreating = false;
       },
       (err) => {
         console.error('Failed to create group', err);
+        this.isCreating = false;
       }
     );
   }

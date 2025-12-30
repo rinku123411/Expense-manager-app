@@ -12,4 +12,10 @@ export class GroupApiService {
   createGroup(group: Group) {
     return this.http.post<string>(`${this.baseUrl}/create-group`, group);
   }
+
+  getGroups(email: string) {
+    return this.http.get<Group[]>(`${this.baseUrl}/groups`, {
+      params: { email },
+    });
+  }
 }

@@ -3,5 +3,5 @@ export interface Group {
   createdBy?: string;
   groupId?: string;
   name: string;
-  membersEmail: string[];
+  membersId: string[];
 }

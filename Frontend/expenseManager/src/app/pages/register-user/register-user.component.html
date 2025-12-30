@@ -79,10 +79,16 @@
     <ion-button
       expand="block"
       type="submit"
-      [disabled]="!formValid()"
+      [disabled]="!formValid() || isSubmitting"
       class="submit-btn"
     >
-      Register
+      <ng-container *ngIf="!isSubmitting; else registering"
+        >Register</ng-container
+      >
+      <ng-template #registering>
+        <ion-spinner name="crescent" slot="start"></ion-spinner>
+        Registering...
+      </ng-template>
     </ion-button>
   </form>
 </ion-content>

@@ -25,16 +25,21 @@ export class LoginPage {
   login() {
     if (this.isLoginClicked) return;
     this.isLoginClicked = true;
-    if (!this.email || !this.password) return;
+    if (!this.email || !this.password) {
+      this.isLoginClicked = false;
+      return;
+    }
     console.log('Logging in with', this.email);
     this.authService.login(this.email, this.password).subscribe(
       (res) => {
         console.log(res);
         localStorage.setItem('auth_token', res.token);
         this.router.navigateByUrl('/homepage');
+        this.isLoginClicked = false;
       },
       (err) => {
         console.error('login failed', err);
+        this.isLoginClicked = false;
       }
     );
     localStorage.setItem('userEmail', this.email);

@@ -1,0 +1,15 @@
+<ion-card class="group-card" (click)="onClick()">
+  <ion-card-header>
+    <ion-card-title>{{ group?.name }}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <div class="meta">
+      <div class="members">
+        Members: <strong>{{ memberCount }}</strong>
+      </div>
+      <div class="created">
+        Created: <span>{{ createdAtDisplay }}</span>
+      </div>
+    </div>
+  </ion-card-content>
+</ion-card>

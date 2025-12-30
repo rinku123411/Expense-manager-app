@@ -20,7 +20,13 @@
         (click)="login()"
         [disabled]="isLoginClicked"
       >
-        Login
+        <ng-container *ngIf="!isLoginClicked; else loggingIn"
+          >Login</ng-container
+        >
+        <ng-template #loggingIn>
+          <ion-spinner name="crescent" slot="start"></ion-spinner>
+          Logging in...
+        </ng-template>
       </ion-button>
     </div>
   </div>

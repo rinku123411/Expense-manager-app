@@ -5,9 +5,34 @@
 </ion-header>
 
 <ion-content class="homepage-content">
-  <div class="create-group-wrapper">
-    <ion-button class="create-group-btn" (click)="createGroup()"
-      >create group</ion-button
-    >
+  <div class="groups-container">
+    <div *ngIf="isLoading" class="loading-wrapper">
+      <ion-spinner name="crescent"></ion-spinner>
+    </div>
+
+    <div *ngIf="!isLoading">
+      <div *ngIf="groups?.length; else noGroups" class="groups-grid">
+        <app-group-card
+          *ngFor="let g of groups"
+          [group]="g"
+          (select)="openGroup($event)"
+        ></app-group-card>
+      </div>
+
+      <ng-template #noGroups>
+        <div class="no-groups">You are not part of any groups yet.</div>
+      </ng-template>
+    </div>
   </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="create-fab">
+    <ion-fab-button (click)="createGroup()">
+      <!-- Use an <img> to reliably render the svg inside the FAB -->
+      <img
+        src="assets/icon/create-group-icon.svg"
+        alt="Create group"
+        class="create-group-img"
+      />
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

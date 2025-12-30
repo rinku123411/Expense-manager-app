@@ -131,6 +131,8 @@ export class RegisterUserComponent implements OnInit {
     return true;
   }
 
+  isSubmitting = false;
+
   onSubmit(event: Event) {
     event.preventDefault();
     this.submitted = true;
@@ -139,15 +141,18 @@ export class RegisterUserComponent implements OnInit {
       return;
     }
 
+    this.isSubmitting = true;
     console.log('register', { name: this.name, email: this.email });
     this.authService.createUser(this.name, this.email, this.password).subscribe(
       (res) => {
         localStorage.setItem('auth_token', res.token);
         console.log('User registered successfully', res);
         this.router.navigateByUrl('/homepage');
+        this.isSubmitting = false;
       },
       (err) => {
         console.error('User registration failed', err);
+        this.isSubmitting = false;
       }
     );
     localStorage.setItem('userEmail', this.email);

@@ -2,21 +2,49 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NavController, IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { GroupService } from 'src/app/services/group-service';
+import { Group } from 'src/app/models/group.model';
+import { GroupCardComponent } from 'src/app/components/group-card/group-card.component';
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule],
+  imports: [IonicModule, CommonModule, GroupCardComponent],
 })
 export class HomepageComponent implements OnInit {
-  constructor(private router: Router) {}
+  groups: Group[] = [];
+  isLoading = false;
 
-  ngOnInit() {}
+  constructor(private router: Router, private groupService: GroupService) {}
+
+  ngOnInit() {
+    const email = localStorage.getItem('userEmail') || '';
+    if (email) {
+      this.isLoading = true;
+      this.groupService.getGroups(email).subscribe({
+        next: (res) => {
+          this.groups = res || [];
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Failed to fetch groups', err);
+          this.isLoading = false;
+        },
+      });
+    }
+  }
 
   createGroup() {
     console.log('createGroup clicked');
     this.router.navigateByUrl('/create-group');
+  }
+
+  openGroup(group?: Group) {
+    if (!group) return;
+    console.log('Group clicked', group);
+    // Navigate to a group detail page if implemented (placeholder)
+    this.router.navigateByUrl(`/group/${group.groupId}`);
   }
 }

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.expenseManagerv2.Bean.UserBean;
+import com.example.expenseManagerv2.Bean.ExpenseBean;
 import com.example.expenseManagerv2.Bean.Group;
 import com.example.expenseManagerv2.Bean.GroupBean;
 import com.example.expenseManagerv2.Bean.LoginBean;
 import com.example.expenseManagerv2.Bean.LoginRequestBean;
 import com.example.expenseManagerv2.Bean.User;
 import com.example.expenseManagerv2.Service.AuthService;
+import com.example.expenseManagerv2.Service.ExpenseService;
 import com.example.expenseManagerv2.Service.GroupService;
 import com.example.expenseManagerv2.Service.UserService;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -38,6 +41,9 @@ public class Controller {
 	
 	@Autowired
 	private GroupService groupService;
+	
+	@Autowired
+	private ExpenseService expenseService;
 	
 	@PostMapping("/create-user")
 	public Map<String, Object> createUser(@RequestBody UserBean userBean) throws InterruptedException, ExecutionException, FirebaseAuthException{
@@ -68,6 +74,16 @@ public class Controller {
 	@GetMapping("/groups")
 	public List<Group> getGroups(@RequestParam String email) throws InterruptedException, ExecutionException {
 		return groupService.getGroupsByEmail(email);
+	}
+	
+	@PostMapping("/expenses")
+	public ExpenseBean addExpense(@RequestBody ExpenseBean expenseBean) throws InterruptedException, ExecutionException {
+		return expenseService .createExpense(expenseBean);
+	}
+	
+	@GetMapping("/groups/{groupId}/expenses")
+	public List<ExpenseBean> getGroupExpenses(@PathVariable String groupId) throws InterruptedException, ExecutionException{
+		return expenseService.getExpensesByGroupId(groupId);
 	}
 	
 	

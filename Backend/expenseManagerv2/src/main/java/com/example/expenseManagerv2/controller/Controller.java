@@ -21,6 +21,7 @@ import com.example.expenseManagerv2.Bean.UserBean;
 import com.example.expenseManagerv2.Bean.ExpenseBean;
 import com.example.expenseManagerv2.Bean.Group;
 import com.example.expenseManagerv2.Bean.GroupBean;
+import com.example.expenseManagerv2.Bean.GroupDashboardBean;
 import com.example.expenseManagerv2.Bean.LoginBean;
 import com.example.expenseManagerv2.Bean.LoginRequestBean;
 import com.example.expenseManagerv2.Bean.User;
@@ -76,6 +77,11 @@ public class Controller {
 		return groupService.getGroupsByEmail(email);
 	}
 	
+	@GetMapping("/groups-by-id")
+	public Group getGroupById(@RequestParam String groupId) throws InterruptedException, ExecutionException {
+		return groupService.getGroupById(groupId);
+	}
+	
 	@PostMapping("/expenses")
 	public ExpenseBean addExpense(@RequestBody ExpenseBean expenseBean) throws InterruptedException, ExecutionException {
 		return expenseService .createExpense(expenseBean);
@@ -84,6 +90,12 @@ public class Controller {
 	@GetMapping("/groups/{groupId}/expenses")
 	public List<ExpenseBean> getGroupExpenses(@PathVariable String groupId) throws InterruptedException, ExecutionException{
 		return expenseService.getExpensesByGroupId(groupId);
+	}
+	
+	@GetMapping("/groups/{groupId}/dashboard")
+	public ResponseEntity<GroupDashboardBean> getDashboard(@PathVariable String groupId) throws InterruptedException, ExecutionException {
+		GroupDashboardBean dashboard=expenseService.getDashboard(groupId);
+		return ResponseEntity.ok(dashboard);
 	}
 	
 	

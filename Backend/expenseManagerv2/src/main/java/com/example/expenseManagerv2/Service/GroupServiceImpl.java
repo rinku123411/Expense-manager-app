@@ -27,4 +27,9 @@ public class GroupServiceImpl implements GroupService{
 		return groupDAO.getGroupsByEmail(email);
 	}
 
+	@Override
+	public Group getGroupById(String groupId) throws InterruptedException, ExecutionException {
+		return groupDAO.getGroupById(groupId);
+	}
+
 }

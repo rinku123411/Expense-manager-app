@@ -20,6 +20,7 @@ import com.google.cloud.firestore.Query;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
+import com.google.firebase.auth.FirebaseAuthException;
 
 
 @Repository
@@ -56,6 +57,17 @@ public class GroupDAOWrapper implements GroupDAO{
         }
 
         return groups;
+	}
+
+	@Override
+	public Group getGroupById(String groupId) throws InterruptedException, ExecutionException {
+		DocumentReference docRef= firestore.collection("groups").document(groupId);
+		ApiFuture<DocumentSnapshot> future= docRef.get();
+		DocumentSnapshot document= future.get();
+		if(document.exists()) {
+			return document.toObject(Group.class);
+		}
+		return null;
 	}
 	 
 

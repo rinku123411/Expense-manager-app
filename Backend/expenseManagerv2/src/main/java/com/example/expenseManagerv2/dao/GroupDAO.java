@@ -9,5 +9,6 @@ import com.example.expenseManagerv2.Bean.GroupBean;
 public interface GroupDAO {
 	public Group createGroup(GroupBean groupBean) throws InterruptedException, ExecutionException;
 	public List<Group> getGroupsByEmail(String email) throws InterruptedException, ExecutionException;
+	public Group getGroupById( String groupId) throws InterruptedException, ExecutionException;
 
 }

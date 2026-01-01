@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.expenseManagerv2.Bean.ExpenseBean;
+import com.example.expenseManagerv2.Bean.GroupDashboardBean;
 import com.example.expenseManagerv2.dao.ExpenseDAO;
 @Service
 public class ExpenseServiceImpl implements ExpenseService{
@@ -21,6 +23,11 @@ public class ExpenseServiceImpl implements ExpenseService{
 	@Override
 	public List<ExpenseBean> getExpensesByGroupId(String groupId) throws InterruptedException, ExecutionException {
 		return expenseDAO.getExpensesByGroupId(groupId);
+	}
+
+	@Override
+	public GroupDashboardBean getDashboard(String groupId) throws InterruptedException, ExecutionException {
+		return expenseDAO.getDashboard(groupId);
 	}
 
 }

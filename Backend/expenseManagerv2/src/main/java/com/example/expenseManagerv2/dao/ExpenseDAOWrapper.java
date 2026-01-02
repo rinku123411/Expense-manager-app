@@ -92,25 +92,27 @@ public class ExpenseDAOWrapper implements ExpenseDAO {
 	public List<SettlementBean> getSettlements(Map<String,Double> balances){
 		List<Map.Entry<String, Double>> creditors=new ArrayList<>();
 		List<Map.Entry<String, Double>> debitors=new ArrayList<>();
-		for(var entry: balances.entrySet()) {
+		for(Map.Entry<String,Double> entry: balances.entrySet()) {
 			if(entry.getValue()>0) creditors.add(entry);
 			else if(entry.getValue()<0) debitors.add(entry);
 		}
 		int i=0, j=0;
 		List<SettlementBean> settlements= new ArrayList<>();
 		while(i<debitors.size() && j<creditors.size()) {
-			String debtor= debitors.get(i).getKey();
-			double debt= debitors.get(i).getValue();
+			Map.Entry<String, Double> debtorEntry = debitors.get(i);
+	        Map.Entry<String, Double> creditorEntry = creditors.get(j);
+			String debtor= debtorEntry.getKey();
+			double debt= -debtorEntry.getValue();
 			
-			String creditor= creditors.get(i).getKey();
-			double credit= creditors.get(i).getValue();
+			String creditor= creditorEntry.getKey();
+			double credit= creditorEntry.getValue();
 			
 			double settleAmount= Math.min(credit, debt);
 			settlements.add(new SettlementBean(debtor,creditor,settleAmount));
-			debitors.get(i).setValue(debitors.get(i).getValue()+settleAmount);
-			creditors.get(i).setValue(creditors.get(i).getValue()-settleAmount);
-			if(debitors.get(i).getValue()==0) i++;
-			if(creditors.get(i).getValue()==0) j++;
+			debtorEntry.setValue(debitors.get(i).getValue()+settleAmount);
+			creditorEntry.setValue(creditors.get(i).getValue()-settleAmount);
+			if (Math.abs(debtorEntry.getValue()) < 0.0001) i++;
+	        if (Math.abs(creditorEntry.getValue()) < 0.0001) j++;
 		}
 		return settlements;
 		

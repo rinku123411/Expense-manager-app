@@ -24,11 +24,13 @@ export class LoadingInterceptor implements HttpInterceptor {
     }
 
     // Show global loading
+    console.debug('[LoadingInterceptor] start', url);
     void this.loadingService.show();
 
     return next.handle(req).pipe(
       finalize(() => {
         void this.loadingService.hide();
+        console.debug('[LoadingInterceptor] end', url);
       })
     );
   }

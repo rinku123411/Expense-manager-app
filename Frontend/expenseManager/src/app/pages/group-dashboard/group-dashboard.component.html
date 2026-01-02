@@ -1,5 +1,20 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button
+        (click)="goBack()"
+        fill="clear"
+        color="primary"
+        aria-label="Back"
+        class="back-button"
+      >
+        <ion-icon
+          class="back-icon"
+          slot="icon-only"
+          src="assets/icon/back.svg"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Group Dashboard</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -15,7 +30,7 @@
     <div class="dashboard-section">
       <h4>Members</h4>
       <ul>
-        <li *ngFor="let m of dashboard.members">{{ m }}</li>
+        <li *ngFor="let m of members">{{ m.name }}</li>
       </ul>
     </div>
 
@@ -23,7 +38,18 @@
       <h4>Expenses</h4>
       <ul>
         <li *ngFor="let e of dashboard.expenses">
-          {{ e.paidBy }} - {{ e.amount }} - {{ e.splitBetween.join(", ") }}
+          {{ e.amount }} was paid by {{ e.paidByDisplay }} and split between
+          {{ e.splitBetweenDisplay.join(", ") }} for {{ e.description }}.
+        </li>
+      </ul>
+    </div>
+    <div class="settlement-section">
+      <h4>Settlements</h4>
+      <ul>
+        <li *ngFor="let settlement of dashboard.settlements">
+          {{ settlement.toDisplay }} will receive {{ settlement.amount }} rupees
+          from
+          {{ settlement.fromDisplay }}
         </li>
       </ul>
     </div>
@@ -54,6 +80,13 @@
         <ion-label position="stacked">Amount</ion-label>
         <ion-input type="number" [(ngModel)]="newExpenseAmount"></ion-input>
       </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Description</ion-label>
+        <ion-input
+          type="string"
+          [(ngModel)]="newExpenseDescription"
+        ></ion-input>
+      </ion-item>
 
       <ion-list>
         <ion-radio-group [(ngModel)]="splitType">
@@ -71,12 +104,12 @@
 
       <div *ngIf="splitType === 'between'" class="members-list">
         <ion-list>
-          <ion-item *ngFor="let m of dashboard?.members">
+          <ion-item *ngFor="let m of members">
             <ion-checkbox
               slot="start"
-              [(ngModel)]="selectedMembersMap[m]"
+              [(ngModel)]="selectedMembersMap[m.email]"
             ></ion-checkbox>
-            <ion-label>{{ m }}</ion-label>
+            <ion-label>{{ m.name }}</ion-label>
           </ion-item>
         </ion-list>
       </div>

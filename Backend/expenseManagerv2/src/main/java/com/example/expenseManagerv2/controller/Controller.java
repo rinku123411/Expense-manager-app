@@ -82,7 +82,7 @@ public class Controller {
 		return groupService.getGroupById(groupId);
 	}
 	
-	@PostMapping("/expenses")
+	@PostMapping("/add-expense")
 	public ExpenseBean addExpense(@RequestBody ExpenseBean expenseBean) throws InterruptedException, ExecutionException {
 		return expenseService .createExpense(expenseBean);
 	}

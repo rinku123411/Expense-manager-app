@@ -42,9 +42,15 @@ export class HomepageComponent implements OnInit {
   }
 
   openGroup(group?: Group) {
-    if (!group) return;
-    console.log('Group clicked', group);
-    // Navigate to a group detail page if implemented (placeholder)
-    this.router.navigateByUrl(`/group/${group.groupId}`);
+    if (!group || !group.groupId) return;
+    console.log('Group clicked', group.groupId);
+    this.groupService.getGroupDashboard(group.groupId).subscribe({
+      next: (dashboard) => {
+        console.log('Fetched group dashboard', dashboard);
+        this.groupService.setDashboardData(dashboard);
+        console.log('Navigating to group dashboard');
+        this.router.navigateByUrl(`/${group.groupId}/dashboard`);
+      },
+    });
   }
 }

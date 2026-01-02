@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { GroupDashboard } from 'src/app/models/group-dashboard.model';
 import { Group } from 'src/app/models/group.model';
 import { environment } from 'src/environments/environment';
 
@@ -17,5 +19,10 @@ export class GroupApiService {
     return this.http.get<Group[]>(`${this.baseUrl}/groups`, {
       params: { email },
     });
+  }
+  getGroupDashboard(groupId: string): Observable<GroupDashboard> {
+    return this.http.get<GroupDashboard>(
+      `${this.baseUrl}/groups/${groupId}/dashboard`
+    );
   }
 }

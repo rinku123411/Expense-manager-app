@@ -35,4 +35,11 @@ export const routes: Routes = [
         (m) => m.HomepageComponent
       ),
   },
+  {
+    path: ':groupId/dashboard',
+    loadComponent: () =>
+      import('./pages/group-dashboard/group-dashboard.component').then(
+        (m) => m.GroupDashboardComponent
+      ),
+  },
 ];

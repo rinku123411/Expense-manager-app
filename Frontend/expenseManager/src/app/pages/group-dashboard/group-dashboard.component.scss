@@ -1,0 +1,43 @@
+:root {
+  --modal-bg: rgba(0, 0, 0, 0.6);
+}
+
+.dashboard-content {
+  padding: 16px;
+}
+
+.add-expense-fab {
+  --border-radius: 16px; /* ensure rounded corners */
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--modal-bg);
+  z-index: 9999;
+}
+
+.modal-container {
+  background: #fff;
+  max-width: 420px;
+  width: 90%;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.members-list {
+  max-height: 220px;
+  overflow: auto;
+  margin-top: 8px;
+}

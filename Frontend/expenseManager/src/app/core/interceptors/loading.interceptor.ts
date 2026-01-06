@@ -19,6 +19,10 @@ export class LoadingInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     // Optionally exclude certain URLs (e.g., static assets).
     const url = req.url;
+    if (req.headers.has('X-SKIP-LOADER')) {
+      return next.handle(req);
+    }
+
     if (url.includes('/assets/') || url.match(/\.(png|jpg|svg|json)$/i)) {
       return next.handle(req);
     }

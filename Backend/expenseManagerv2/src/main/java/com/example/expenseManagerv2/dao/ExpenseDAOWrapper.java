@@ -71,6 +71,7 @@ public class ExpenseDAOWrapper implements ExpenseDAO {
 		groupDashboardBean.setBalances(balances);
 		groupDashboardBean.setSettlements(settlements);
 		groupDashboardBean.setExpenses(expenses);
+		System.out.println(groupDashboardBean.getBalances().toString());
 		return groupDashboardBean;
 	}
 	
@@ -96,8 +97,9 @@ public class ExpenseDAOWrapper implements ExpenseDAO {
 			if(entry.getValue()>0) creditors.add(entry);
 			else if(entry.getValue()<0) debitors.add(entry);
 		}
-		int i=0, j=0;
 		List<SettlementBean> settlements= new ArrayList<>();
+		int i=0, j=0;
+		
 		while(i<debitors.size() && j<creditors.size()) {
 			Map.Entry<String, Double> debtorEntry = debitors.get(i);
 	        Map.Entry<String, Double> creditorEntry = creditors.get(j);
@@ -108,9 +110,12 @@ public class ExpenseDAOWrapper implements ExpenseDAO {
 			double credit= creditorEntry.getValue();
 			
 			double settleAmount= Math.min(credit, debt);
-			settlements.add(new SettlementBean(debtor,creditor,settleAmount));
+			if(debtor!=creditor) {
+				settlements.add(new SettlementBean(debtor,creditor,settleAmount));
+//				System.out.println(balances.toString());
+			}
 			debtorEntry.setValue(debitors.get(i).getValue()+settleAmount);
-			creditorEntry.setValue(creditors.get(i).getValue()-settleAmount);
+			creditorEntry.setValue(creditors.get(j).getValue()-settleAmount);
 			if (Math.abs(debtorEntry.getValue()) < 0.0001) i++;
 	        if (Math.abs(creditorEntry.getValue()) < 0.0001) j++;
 		}

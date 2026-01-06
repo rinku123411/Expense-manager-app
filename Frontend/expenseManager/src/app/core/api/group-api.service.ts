@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GroupDashboard } from 'src/app/models/group-dashboard.model';
@@ -22,7 +22,12 @@ export class GroupApiService {
   }
   getGroupDashboard(groupId: string): Observable<GroupDashboard> {
     return this.http.get<GroupDashboard>(
-      `${this.baseUrl}/groups/${groupId}/dashboard`
+      `${this.baseUrl}/groups/${groupId}/dashboard`,
+      {
+        headers: new HttpHeaders({
+          'X-SKIP-LOADER': 'true',
+        }),
+      }
     );
   }
 }

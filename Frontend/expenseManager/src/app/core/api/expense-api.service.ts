@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Expense } from 'src/app/models/group-dashboard.model';
 import { environment } from 'src/environments/environment';
@@ -10,6 +10,10 @@ export class ExpenseApiService {
   private baseUrl = environment.apiBaseUrl;
   constructor(private http: HttpClient) {}
   addExpense(expense: Expense) {
-    return this.http.post<Expense>(`${this.baseUrl}/add-expense`, expense);
+    return this.http.post<Expense>(`${this.baseUrl}/add-expense`, expense, {
+      headers: new HttpHeaders({
+        'X-SKIP-LOADER': 'true',
+      }),
+    });
   }
 }

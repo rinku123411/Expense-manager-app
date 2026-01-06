@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { environment } from 'src/environments/environment';
@@ -16,7 +16,12 @@ export class AuthApiService {
   }
   findUserByEmail(email: string) {
     return this.http.get<User>(
-      `${this.baseUrl}/get-user-by-email?email=${email}`
+      `${this.baseUrl}/get-user-by-email?email=${email}`,
+      {
+        headers: new HttpHeaders({
+          'X-SKIP-LOADER': 'true',
+        }),
+      }
     );
   }
 }

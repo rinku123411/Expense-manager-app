@@ -1,16 +1,16 @@
 <ion-content class="ion-padding">
-  <div>
-    <ion-label>
+  <div class="login-container">
+    <ion-label class="login-title">
       <ion-title>Login</ion-title>
     </ion-label>
 
-    <div>
-      <ion-item>
-        <ion-input label="Email" type="email" [(ngModel)]="email"> </ion-input>
+    <div >
+      <ion-item class="form-feild">
+        <ion-input label="Email:" type="email" [(ngModel)]="email"> </ion-input>
       </ion-item>
 
-      <ion-item>
-        <ion-input label="Password" type="password" [(ngModel)]="password">
+      <ion-item class="form-feild">
+        <ion-input label="Password:" type="password" [(ngModel)]="password">
         </ion-input>
       </ion-item>
 
@@ -30,5 +30,5 @@
       </ion-button>
     </div>
   </div>
-  <div (click)="createUser()">Not an user?Click here</div>
+  <div class="create-user" (click)="createUser()">Not an user? Click here</div>
 </ion-content>

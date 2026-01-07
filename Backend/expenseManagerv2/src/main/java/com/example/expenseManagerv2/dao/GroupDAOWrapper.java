@@ -30,16 +30,21 @@ public class GroupDAOWrapper implements GroupDAO{
 
 	@Override
 	public Group createGroup(GroupBean groupBean) throws InterruptedException, ExecutionException {
+		System.out.println(groupBean.getName());
+		System.out.println(groupBean.getMembersId());
+		System.out.println("------");
 		DocumentReference docRef = firestore.collection("groups").document();
 		HashMap<String, Object> group= new HashMap<>();
 		group.put("name",groupBean.getName());
 		group.put("groupId",docRef.getId());
 		group.put("createdAt",Instant.now().toString());
-		group.put("membersId",groupBean.getMembersEmail());
+		group.put("membersId",groupBean.getMembersId());
 		group.put("createdBy", groupBean.getCreatedBy());
 		ApiFuture<WriteResult> collectionApiFuture = firestore.collection("groups").document(docRef.getId()).set(group);
 		ApiFuture<DocumentSnapshot> readFuture = docRef.get();
 	    DocumentSnapshot snapshot = readFuture.get();
+	    
+	    System.out.println(snapshot.toObject(Group.class));
 		return snapshot.toObject(Group.class);
 	}
 

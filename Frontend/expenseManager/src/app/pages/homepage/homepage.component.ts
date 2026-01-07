@@ -7,6 +7,7 @@ import { Group } from 'src/app/models/group.model';
 import { GroupCardComponent } from 'src/app/components/group-card/group-card.component';
 import { User } from 'firebase/auth';
 import { AuthService } from 'src/app/services/auth.service';
+import { startWith, Subject, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-homepage',

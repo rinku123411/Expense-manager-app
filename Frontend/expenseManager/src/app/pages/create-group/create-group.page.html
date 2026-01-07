@@ -19,7 +19,7 @@
 </ion-header>
 
 <ion-content class="create-group-content">
-  <ion-list>
+  <ion-list class="create-group-container">
     <ion-item>
       <ion-label position="stacked">Group Name</ion-label>
       <ion-input
@@ -36,6 +36,7 @@
         placeholder="member@example.com"
       ></ion-input>
       <ion-button
+      class="add-button"
         fill="outline"
         size="small"
         slot="end"
@@ -48,7 +49,7 @@
   </ion-list>
 
   <div class="members-list" *ngIf="members.length > 0">
-    <ion-list>
+    <ion-list class="members-list-container">
       <ion-item *ngFor="let m of members; let i = index">
         <ion-label>
           <div class="member-email">{{ m.email }}</div>

@@ -18,6 +18,9 @@ export class GroupApiService {
   getGroups(email: string) {
     return this.http.get<Group[]>(`${this.baseUrl}/groups`, {
       params: { email },
+      headers: new HttpHeaders({
+        'X-SKIP-LOADER': 'true',
+      }),
     });
   }
   getGroupDashboard(groupId: string): Observable<GroupDashboard> {

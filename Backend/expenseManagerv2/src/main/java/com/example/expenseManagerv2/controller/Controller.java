@@ -69,6 +69,7 @@ public class Controller {
 	
 	@PostMapping("/create-group")
 	public Group createGroup(@RequestBody GroupBean groupBean) throws InterruptedException, ExecutionException, FirebaseAuthException{
+		System.out.println(groupBean.getMembersId());
 		return groupService.createGroup(groupBean);
 	}
 	

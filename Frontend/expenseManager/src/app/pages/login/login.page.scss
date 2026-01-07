@@ -1,25 +1,31 @@
 body {
   background-color: white;
 }
-.login-container{
+
+.login-image{
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+  transform: scale(1.1);
+
+}
+.login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: fit-content;
-  .login-title{
-    margin-bottom: 20px;
-    font-size: 24px;
-    font-weight: bold;
-    align-items: center;
-  }
+  .form-container {
+    display: flex;
 
-  .form-feild{
-    border-color: black;
-
+    flex-direction: column;
+    .input-feilds {
+      border: 3px dashed black;
+      
+    }
   }
 }
-.create-user{
+.create-user {
   display: flex;
   justify-content: center;
   align-items: center;

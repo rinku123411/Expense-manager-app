@@ -1,11 +1,19 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Expense Manager App</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="homepage-content">
+  <div class="welcome-banner">
+    <h1 class="welcome-title">
+      Welcome back,<span class="user-name">{{ userName }}</span
+      >!
+    </h1>
+
+    <p class="welcome-subtitle">
+      Here are your groups. Tap on a group to view details or manage expenses.
+    </p>
+  </div>
   <div class="groups-container">
+    <div class="groups-header">
+      <h2 class="groups-title">Groups</h2>
+      <div class="groups-divider"></div>
+    </div>
     <div *ngIf="isLoading" class="loading-wrapper">
       <ion-spinner name="crescent"></ion-spinner>
     </div>
@@ -27,7 +35,6 @@
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="create-fab">
     <ion-fab-button (click)="createGroup()">
-      <!-- Use an <img> to reliably render the svg inside the FAB -->
       <img
         src="assets/icon/create-group-icon.svg"
         alt="Create group"

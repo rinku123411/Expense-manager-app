@@ -1,21 +1,49 @@
 .group-card {
-  cursor: pointer;
-  border-radius: 12px;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  overflow: hidden;
+  border: 2px dashed #118c4f;
+  background-color: #118c4f;
+  box-shadow: 0 8px 20px rgba(17, 140, 79, 0.25);
 }
-.group-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+
+/* Mosaic grid pattern */
+.card-pattern {
+  padding: 14px;
+  background-color: #118c4f;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 14px 14px;
 }
+
+/* Title */
+.group-card ion-card-title {
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Content */
+.group-card ion-card-content {
+  color: #eafff4;
+  font-size: 14px;
+}
+
+/* Meta row */
 .meta {
   display: flex;
   justify-content: space-between;
-  font-size: 0.9rem;
-  color: var(--ion-text-color, #333);
+  margin-top: 10px;
 }
-@media (max-width: 480px) {
-  .meta {
-    flex-direction: column;
-    gap: 6px;
-  }
+
+/* Emphasis */
+.members strong {
+  color: #ffffff;
+  font-size: 16px;
+}
+
+.created span {
+  color: #d0f2e0;
 }

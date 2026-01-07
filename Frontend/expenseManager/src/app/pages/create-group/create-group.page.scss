@@ -1,3 +1,21 @@
+.create-group-header ion-toolbar {
+  --background: #118c4f; /* money green */
+  --color: #ffffff;
+}
+
+.create-group-header ion-title {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.back-icon {
+  color: #ffffff;
+  fill: #ffffff;
+}
+
+.back-button {
+  color: #ffffff;
+}
 .create-group-content {
   padding: 16px;
 }

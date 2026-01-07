@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { GroupService } from 'src/app/services/group-service';
 import { Group } from 'src/app/models/group.model';
 import { GroupCardComponent } from 'src/app/components/group-card/group-card.component';
+import { User } from 'firebase/auth';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-homepage',
@@ -16,8 +18,13 @@ import { GroupCardComponent } from 'src/app/components/group-card/group-card.com
 export class HomepageComponent implements OnInit {
   groups: Group[] = [];
   isLoading = false;
+  userName: string = '';
 
-  constructor(private router: Router, private groupService: GroupService) {}
+  constructor(
+    private router: Router,
+    private groupService: GroupService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     const email = localStorage.getItem('userEmail') || '';
@@ -31,6 +38,11 @@ export class HomepageComponent implements OnInit {
         error: (err) => {
           console.error('Failed to fetch groups', err);
           this.isLoading = false;
+        },
+      });
+      this.authService.findUserByEmail(email).subscribe({
+        next: (user) => {
+          this.userName = user.name || '';
         },
       });
     }

@@ -1,13 +1,12 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { NavController, IonicModule } from '@ionic/angular';
-import { Router } from '@angular/router';
-import { GroupService } from 'src/app/services/group-service';
-import { Group } from 'src/app/models/group.model';
-import { GroupCardComponent } from 'src/app/components/group-card/group-card.component';
-import { User } from 'firebase/auth';
-import { AuthService } from 'src/app/services/auth.service';
-import { startWith, Subject, switchMap } from 'rxjs';
+import { CommonModule } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { NavigationEnd, Router } from "@angular/router";
+import { IonicModule } from "@ionic/angular";
+import { filter, startWith, Subject, switchMap } from "rxjs";
+import { GroupCardComponent } from "src/app/components/group-card/group-card.component";
+import { Group } from "src/app/models/group.model";
+import { AuthService } from "src/app/services/auth.service";
+import { GroupService } from "src/app/services/group-service";
 
 @Component({
   selector: 'app-homepage',
@@ -21,6 +20,9 @@ export class HomepageComponent implements OnInit {
   isLoading = false;
   userName: string = '';
 
+  private refresh$ = new Subject<void>();
+  private email: string = '';
+
   constructor(
     private router: Router,
     private groupService: GroupService,
@@ -28,10 +30,17 @@ export class HomepageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const email = localStorage.getItem('userEmail') || '';
-    if (email) {
-      this.isLoading = true;
-      this.groupService.getGroups(email).subscribe({
+    this.email = localStorage.getItem('userEmail') || '';
+    if (!this.email) return;
+
+    // 🔥 Auto refresh groups
+    this.isLoading = true;
+    this.refresh$
+      .pipe(
+        startWith(void 0), // initial load
+        switchMap(() => this.groupService.getGroups(this.email))
+      )
+      .subscribe({
         next: (res) => {
           this.groups = res || [];
           this.isLoading = false;
@@ -41,27 +50,32 @@ export class HomepageComponent implements OnInit {
           this.isLoading = false;
         },
       });
-      this.authService.findUserByEmail(email).subscribe({
-        next: (user) => {
-          this.userName = user.name || '';
-        },
+
+    // 👤 Load username once
+    this.authService.findUserByEmail(this.email).subscribe({
+      next: (user) => {
+        this.userName = user.name || '';
+      },
+    });
+
+    // 👀 Listen to navigation back to homepage
+    this.router.events
+      .pipe(filter((e) => e instanceof NavigationEnd))
+      .subscribe(() => {
+        this.refresh$.next(); // 🔁 refresh groups
       });
-    }
   }
 
   createGroup() {
-    console.log('createGroup clicked');
     this.router.navigateByUrl('/create-group');
   }
 
   openGroup(group?: Group) {
     if (!group || !group.groupId) return;
-    console.log('Group clicked', group.groupId);
+
     this.groupService.getGroupDashboard(group.groupId).subscribe({
       next: (dashboard) => {
-        console.log('Fetched group dashboard', dashboard);
         this.groupService.setDashboardData(dashboard);
-        console.log('Navigating to group dashboard');
         this.router.navigateByUrl(`/${group.groupId}/dashboard`);
       },
     });

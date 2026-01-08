@@ -28,7 +28,8 @@ export class GroupDashboardComponent implements OnInit {
   groupId?: string;
   dashboard: any;
   isLoading = false;
-  currentUserEmail = localStorage.getItem('userEmail') || ''; // cached for quick access
+  currentUserEmail = localStorage.getItem('userEmail') || '';
+  activeTab: 'expenses' | 'settlements' = 'expenses';
 
   // Add expense UI state
   showAddExpense = false;

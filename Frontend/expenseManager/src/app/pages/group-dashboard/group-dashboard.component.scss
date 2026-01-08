@@ -1,13 +1,106 @@
-:root {
-  --modal-bg: rgba(0, 0, 0, 0.6);
+
+.dashboard-header ion-toolbar {
+  --background: #118c4f;
+  --color: #ffffff;
+  .back-button {
+    color: #ffffff;
+  }
 }
 
 .dashboard-content {
   padding: 16px;
+  .group-details {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    .group-name {
+      font-weight: 700;
+      font-size: 50px;
+      color: #118c4f;
+      text-align: center;
+    }
+    .members-section {
+      margin-top: 0;
+      margin-left: 10px;
+      margin-right: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .members-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 6px 16px rgba(17, 140, 79, 0.25);
+      }
+      .members-table thead {
+        font-size: 30px;
+        font-weight: 600;
+        background: linear-gradient(135deg, #118c4f, #1fa463);
+      }
+      .members-table th {
+        color: #ffffff;
+        text-align: center;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .members-table tbody tr {
+        background-color: #eafaf1;
+      }
+
+      .members-table tbody tr:nth-child(even) {
+        background-color: #dff3e9;
+      }
+
+      .members-table td {
+        padding: 10px 12px;
+        color: #0f5f35;
+        font-size: 14px;
+        border-bottom: 1px solid #bfe6cf;
+      }
+      .members-table tbody tr:hover {
+        background-color: #c9ecd8;
+      }
+
+      /* Remove last border */
+      .members-table tbody tr:last-child td {
+        border-bottom: none;
+      }
+    }
+  }
+  .tabs {
+    margin-top: 15px;
+  }
+}
+ion-segment {
+  --background: #eafaf1;
+}
+
+ion-segment-button {
+  --color: #118c4f;
+  --color-checked: #ffffff;
+  --background-checked: #118c4f;
+  font-weight: 600;
 }
 
 .add-expense-fab {
-  --border-radius: 16px; /* ensure rounded corners */
+  --border-radius: 16px;
+  bottom: 75px;
+  right: 20px;
+  .add-expense-fab ion-fab-button {
+    --background: #118c4f; /* money green */
+    --background-activated: #0e6f3d;
+    --background-hover: #1fa463;
+  }
+  .add-expense-fab .rupee-icon-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    --background: #118c4f; /* money green */
+    --background-activated: #0e6f3d;
+    --background-hover: #1fa463;
+  }
 }
 
 .modal-backdrop {

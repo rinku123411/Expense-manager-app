@@ -1,11 +1,10 @@
-<ion-header>
+<ion-header class="dashboard-header">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button
         (click)="goBack()"
         fill="clear"
-        color="primary"
-        aria-label="Back"
+        aria-label="White"
         class="back-button"
       >
         <ion-icon
@@ -15,7 +14,7 @@
         ></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Group Dashboard</ion-title>
+    <ion-title>Dashboard</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -24,35 +23,52 @@
     <ion-spinner name="crescent"></ion-spinner>
   </div>
 
-  <div *ngIf="!isLoading && dashboard">
-    <h3>{{ dashboard.groupName }}</h3>
+  <div class="group-details" *ngIf="!isLoading && dashboard">
+    <h3 class="group-name">{{ dashboard.groupName }}</h3>
 
-    <div class="dashboard-section">
-      <h4>Members</h4>
-      <ul>
-        <li *ngFor="let m of members">{{ m.name }}</li>
-      </ul>
+    <div class="members-section">
+      <table class="members-table">
+        <thead>
+          <tr>
+            <th class="member-heading">Members</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let m of members">
+            <td>{{ m.name }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+  </div>
+  <!-- Tabs -->
+  <ion-segment class="tabs" [(ngModel)]="activeTab" value="expenses">
+    <ion-segment-button value="expenses">
+      <ion-label>Expenses</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="settlements">
+      <ion-label>Settlements</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 
-    <div class="dashboard-section">
-      <h4>Expenses</h4>
-      <ul>
-        <li *ngFor="let e of dashboard.expenses">
-          {{ e.amount }} was paid by {{ e.paidByDisplay }} and split between
-          {{ e.splitBetweenDisplay.join(", ") }} for {{ e.description }}.
-        </li>
-      </ul>
-    </div>
-    <div class="settlement-section">
-      <h4>Settlements</h4>
-      <ul>
-        <li *ngFor="let settlement of dashboard.settlements">
-          {{ settlement.toDisplay }} will receive {{ settlement.amount }} rupees
-          from
-          {{ settlement.fromDisplay }}
-        </li>
-      </ul>
-    </div>
+  <!-- Expenses -->
+  <div class="dashboard-section" *ngIf="activeTab === 'expenses'">
+    <ul>
+      <li *ngFor="let e of dashboard.expenses">
+        {{ e.amount }} was paid by {{ e.paidByDisplay }} and split between
+        {{ e.splitBetweenDisplay.join(", ") }} for {{ e.description }}.
+      </li>
+    </ul>
+  </div>
+
+  <!-- Settlements -->
+  <div class="settlement-section" *ngIf="activeTab === 'settlements'">
+    <ul>
+      <li *ngFor="let settlement of dashboard.settlements">
+        {{ settlement.toDisplay }} will receive {{ settlement.amount }} rupees
+        from {{ settlement.fromDisplay }}
+      </li>
+    </ul>
   </div>
 
   <div *ngIf="!isLoading && !dashboard">
@@ -67,7 +83,11 @@
     class="add-expense-fab"
   >
     <ion-fab-button (click)="openAddExpense()">
-      <ion-icon name="add"></ion-icon>
+      <img
+        src="assets/icon/rupee-icon.svg"
+        alt="add Expense"
+        class="rupee-icon-img"
+      />
     </ion-fab-button>
   </ion-fab>
 

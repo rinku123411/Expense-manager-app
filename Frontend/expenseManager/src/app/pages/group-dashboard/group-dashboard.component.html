@@ -98,17 +98,22 @@
 
       <ion-item>
         <ion-label position="stacked">Amount</ion-label>
-        <ion-input type="number" [(ngModel)]="newExpenseAmount"></ion-input>
+        <ion-input
+          type="number"
+          [(ngModel)]="newExpenseAmount"
+          required
+        ></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Description</ion-label>
         <ion-input
           type="string"
           [(ngModel)]="newExpenseDescription"
+          required
         ></ion-input>
       </ion-item>
 
-      <ion-list>
+      <ion-list class="add-expense-list">
         <ion-radio-group [(ngModel)]="splitType">
           <ion-item>
             <ion-radio slot="start" value="equal"></ion-radio>
@@ -123,11 +128,12 @@
       </ion-list>
 
       <div *ngIf="splitType === 'between'" class="members-list">
-        <ion-list>
+        <ion-list class= "spilt-between-list">
           <ion-item *ngFor="let m of members">
-            <ion-checkbox
+            <ion-checkbox 
               slot="start"
               [(ngModel)]="selectedMembersMap[m.email]"
+              class="member-checkbox"
             ></ion-checkbox>
             <ion-label>{{ m.name }}</ion-label>
           </ion-item>

@@ -1,4 +1,3 @@
-
 .dashboard-header ion-toolbar {
   --background: #118c4f;
   --color: #ffffff;
@@ -63,7 +62,6 @@
         background-color: #c9ecd8;
       }
 
-      /* Remove last border */
       .members-table tbody tr:last-child td {
         border-bottom: none;
       }
@@ -89,20 +87,41 @@ ion-segment-button {
   bottom: 75px;
   right: 20px;
   .add-expense-fab ion-fab-button {
-    --background: #118c4f; /* money green */
+    --background: #118c4f;
     --background-activated: #0e6f3d;
     --background-hover: #1fa463;
   }
-  .add-expense-fab .rupee-icon-img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    --background: #118c4f; /* money green */
+  ion-fab-button {
+    --background: #118c4f;
     --background-activated: #0e6f3d;
     --background-hover: #1fa463;
+    --box-shadow: 0 8px 20px rgba(17, 140, 79, 0.4);
+  }
+  .rupee-icon-img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
   }
 }
-
+ion-radio {
+  --color: #118c4f;
+  --color-checked: #118c4f;
+}
+ion-radio-group ion-item {
+  --highlight-color-focused: #118c4f;
+  --highlight-color-valid: #118c4f;
+  --ripple-color: rgba(17, 140, 79, 0.2);
+}
+ion-item {
+  --highlight-color-focused: #118c4f;
+  --highlight-color-activated: #118c4f;
+  --ripple-color: rgba(17, 140, 79, 0.2);
+}
+.add-expense-list ion-item,
+.members-list ion-item {
+  --inner-border-width: 0;
+  --border-width: 0;
+}
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -111,15 +130,36 @@ ion-segment-button {
   justify-content: center;
   background: var(--modal-bg);
   z-index: 9999;
-}
+  .modal-container {
+    background: #d3d3d3;
+    max-width: 420px;
+    width: 90%;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    .add-expense-list {
+      background: #d3d3d3;
+    }
+    .spilt-between-list {
+      background: #d3d3d3;
+    }
+    .member-checkbox::part(container) {
+      background: #d3d3d3;
+      border: 2px solid #000000; /* black outline */
+      border-radius: 6px;
+    }
 
-.modal-container {
-  background: #fff;
-  max-width: 420px;
-  width: 90%;
-  padding: 16px;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    /* Checked */
+    .member-checkbox.checkbox-checked::part(container) {
+      background: #118c4f;
+      border: 2px solid #000000; /* keep black outline */
+    }
+
+    /* Checkmark */
+    .member-checkbox::part(mark) {
+      color: #ffffff;
+    }
+  }
 }
 
 .modal-actions {

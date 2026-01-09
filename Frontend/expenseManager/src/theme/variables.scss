@@ -3,6 +3,7 @@
 :root {
   --ion-background-color: #ffffff;
   --ion-text-color: #000000;
+  --ion-color-primary: #118c4f;
 }
 body {
   --ion-background-color: #d3d3d3;
@@ -16,6 +17,6 @@ ion-button {
   --color: #ffffff;
 }
 ion-item {
-  --background: #d3d3d3;;
+  --background: #d3d3d3;
   --color: #000000;
 }

@@ -1,12 +1,11 @@
-<ion-header>
+<ion-header class="create-user-header">
   <ion-toolbar>
     <ion-buttons slot="start">
       <!-- Back button that calls goBack() in the component -->
       <ion-button
         (click)="goBack()"
         fill="clear"
-        color="primary"
-        aria-label="Back"
+        aria-label="White"
         class="back-button"
       >
         <ion-icon
@@ -22,7 +21,7 @@
 
 <ion-content class="ion-padding">
   <form class="register-form" (submit)="onSubmit($event)">
-    <ion-list lines="full">
+    <ion-list lines="full" class="register-form-list">
       <ion-item>
         <ion-label position="stacked">Name</ion-label>
         <ion-input
